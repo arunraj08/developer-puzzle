@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
-import { Observable } from 'rxjs';
-import { A11yModule } from '@angular/cdk/a11y';
-import { DH_CHECK_P_NOT_SAFE_PRIME } from 'constants';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -29,7 +26,6 @@ export class StocksComponent implements OnInit {
     { viewValue: 'One month', value: '1m' }
   ];
 
-  minDate = new Date(2000, 0, 1);
   maxDate = new Date();
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
