@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
-import { Observable } from 'rxjs';
-import { A11yModule } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -14,6 +12,8 @@ export class StocksComponent implements OnInit {
   symbol: string;
   period: string;
   stockData: any;
+  fromDate: Date;
+  toDate: Date;
 
   timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -26,10 +26,14 @@ export class StocksComponent implements OnInit {
     { viewValue: 'One month', value: '1m' }
   ];
 
+  maxDate = new Date();
+
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      period: [null, Validators.required],
+      fromDate: [null, Validators.required],
+      toDate: [null, Validators.required]
     });
   }
 
@@ -37,11 +41,22 @@ export class StocksComponent implements OnInit {
 
   }
 
+
+
   fetchQuote() {
     
     if (this.stockPickerForm.valid) {
 
-      const { symbol, period } = this.stockPickerForm.value;
+      let { symbol, period, fromDate, toDate } = this.stockPickerForm.value;
+
+      if(fromDate.getTime() > toDate.getTime()) {
+        
+        this.stockPickerForm.patchValue({
+          fromDate: toDate
+        });
+        this.fromDate = toDate;
+      }
+
       this.priceQuery.fetchQuote(symbol, period);
 
       this.priceQuery.priceQueries$.
