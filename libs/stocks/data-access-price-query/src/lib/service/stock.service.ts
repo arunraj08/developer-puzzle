@@ -12,11 +12,6 @@ import { PriceQueryResponse } from './../+state/price-query.type';
 export class StockService {
 
   getStockDetails(symbol, period){
-
-    /* const apiURL=  `${this.env.apiURL}/beta/stock/${symbol}/chart/${
-      period
-    }?token=${this.env.apiKey}`; */
-
     const apiURL=  `/api/stock/${symbol}/chart/${period}`;
     return this.httpClient.get<PriceQueryResponse[]>(apiURL);
   }
