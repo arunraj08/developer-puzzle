@@ -33,16 +33,6 @@ const init = async () => {
     return payload;  
   };
 
-  /* server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-      return {
-        hello: 'world'
-      };
-    }
-  }); */
-
   server.method({
       name: 'stock',
       method: getStock,
