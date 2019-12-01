@@ -7,10 +7,17 @@ const Joi = require('@hapi/joi');
 const Wreck = require('@hapi/wreck');
 
 import { environment as env} from './environments/environment';
+
 const init = async () => {
   const server = Hapi.server({
     port: 3333,
-    host: 'localhost'
+    host: 'localhost',
+    routes: {
+      cors: {
+        origin: ["*"],
+        headers: ["Accept", "Content-Type"]
+      }
+    }
   });
 
   const getStock = async function( symbol, period) {
