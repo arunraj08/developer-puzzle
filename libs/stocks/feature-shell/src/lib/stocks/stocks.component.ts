@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -11,8 +12,7 @@ export class StocksComponent implements OnInit {
   stockPickerForm: FormGroup;
   symbol: string;
   period: string;
-
-  quotes$ = this.priceQuery.priceQueries$;
+  stockData: any;
 
   timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -33,13 +33,23 @@ export class StocksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stockPickerForm.valueChanges.subscribe(this.fetchQuote);
-  }
 
-  fetchQuote() {
-    if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
+    this.stockPickerForm.valueChanges
+    .pipe(
+      debounceTime(1000),
+      filter(() => this.stockPickerForm.valid),
+      distinctUntilChanged()
+    )
+    .subscribe( stockData => {
+
+      const { symbol, period } = stockData;
       this.priceQuery.fetchQuote(symbol, period);
-    }
+       this.priceQuery.priceQueries$.
+       subscribe( (responseData)  => {
+         (this.stockData = responseData)
+       });  
+       
+    });
+
   }
 }
