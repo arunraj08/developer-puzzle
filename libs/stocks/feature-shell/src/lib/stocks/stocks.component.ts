@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
-import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -48,7 +48,7 @@ export class StocksComponent implements OnInit {
        subscribe( (responseData)  => {
          (this.stockData = responseData)
        });  
-       
+
     });
 
   }
