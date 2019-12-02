@@ -37,8 +37,8 @@ export class StocksComponent implements OnInit {
     this.stockPickerForm.valueChanges
     .pipe(
       debounceTime(1000),
-      filter(() => this.stockPickerForm.valid),
-      distinctUntilChanged()
+      distinctUntilChanged(),
+      filter(() => this.stockPickerForm.valid)
     )
     .subscribe( stockData => {
 
