@@ -29,7 +29,13 @@
     </mat-select>
   </mat-form-field>
 
-  <button (click)="fetchQuote()" mat-raised-button>Go</button>
+  <button [disabled]="!stockPickerForm.valid" (click)="fetchQuote()" mat-raised-button>Go</button>
 </form>
 
+<div *ngIf="!(error$ | async); else error">
 <coding-challenge-chart *ngIf="stockData?.length > 0" [data]="stockData"></coding-challenge-chart>
+</div>
+
+<ng-template #error>
+  <h2> {{(error$ | async)?.message}}</h2>
+</ng-template>

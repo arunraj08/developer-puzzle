@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
 import { Observable } from 'rxjs';
 import { A11yModule } from '@angular/cdk/a11y';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'coding-challenge-stocks',
@@ -14,6 +15,7 @@ export class StocksComponent implements OnInit {
   symbol: string;
   period: string;
   stockData: any;
+  error$: Observable<Error>;
 
   timePeriods = [
     { viewValue: 'All available data', value: 'max' },
@@ -34,7 +36,7 @@ export class StocksComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.error$ = this.priceQuery.error$;
   }
 
   fetchQuote() {
@@ -47,7 +49,8 @@ export class StocksComponent implements OnInit {
       this.priceQuery.priceQueries$.
        subscribe( (responseData)  => {
          (this.stockData = responseData)
-       }); 
+       }
+       ); 
     }
   }
 
