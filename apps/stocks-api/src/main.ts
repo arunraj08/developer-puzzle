@@ -2,13 +2,13 @@
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  **/
-const Hapi = require('@hapi/hapi');
-const Joi = require('@hapi/joi');
-const Wreck = require('@hapi/wreck');
 
-import { environment as env} from './environments/environment';
+import * as Hapi from '@hapi/hapi';
+import * as Joi from '@hapi/joi';
+import { getStock } from './app/service/stockService'
 
 const init = async () => {
+
   const server = Hapi.server({
     port: 3333,
     host: 'localhost',
@@ -20,18 +20,6 @@ const init = async () => {
     }
   });
 
-  const getStock = async function( symbol, period) {
-    
-    const apiURL = `${env.apiURL}/beta/stock/${symbol}/chart/${period}?token=${env.apiKey}`;
-
-    console.log(apiURL);
-
-    const { res, payload } = await Wreck.get(apiURL, {
-      json: true
-    });
-
-    return payload;  
-  };
 
   server.method({
       name: 'stock',
