@@ -85,6 +85,12 @@ _**Make a PR from the branch `feat_stock_typeahead` to `master` and provide a co
 
 > Add comments to the PR. Focus on all items that you can see - this is a hypothetical example but let's treat it as a critical application. Then present these changes as another commit on the PR.
 
+```
+    1. Comments added in the PR
+    2. Resolved graph refresh issue for type ahead
+    https://github.com/arunraj08/developer-puzzle/pull/1/files
+```
+
 ### Task 3
 
 ```
@@ -98,6 +104,11 @@ _**Implement this feature and make a PR from the branch `feat_custom_dates` to `
 
 > We need two date-pickers: "from" and "to". The date-pickers should not allow selection of dates after the current day. "to" cannot be before "from" (selecting an invalid range should make both dates the same value)
 
+```
+    Implemented material date picker component for from and to date
+    https://github.com/arunraj08/developer-puzzle/pull/2
+```
+
 ### Task 4
 
 ```
@@ -109,3 +120,8 @@ same data. If a query is not in cache we should call-through to the API.
 _**Implement the solution and make a PR from the branch `feat_proxy_server` to `master`**_
 
 > It is important to get the implementation working before trying to organize and clean it up.
+
+```
+PR created to implement proxy call
+https://github.com/arunraj08/developer-puzzle/pull/3/files
+```
