@@ -1,32 +1,20 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- **/
-import { Server } from 'hapi';
+import * as Glue from '@hapi/glue';
+import { manifest } from './app/config/manifest';
 
-const init = async () => {
-  const server = new Server({
-    port: 3333,
-    host: 'localhost'
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-      return {
-        hello: 'world'
-      };
-    }
-  });
-
-  await server.start();
-  console.log('Server running on %s', server.info.uri);
+const options = {
+    relativeTo: __dirname
 };
 
-process.on('unhandledRejection', err => {
-  console.log(err);
-  process.exit(1);
-});
+const startServer = async function () {
+    try {
+        const server = await Glue.compose(manifest, options);
+        await server.start();
+        console.log('Server running on %s', server.info.uri);
+    }
+    catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+};
 
-init();
+startServer();
